@@ -32,7 +32,8 @@ class DepartmentServiceTest {
                 .build();
 
         Mockito.when(departmentRepository.findByDepartmentNameIgnoreCase("CS")).thenReturn(department);
-        Mockito.when(departmentRepository.findByDepartmentNameAndDepartmentCodeIgnoreCase("CS", "CS-15"))
+        Mockito.when(departmentRepository.findByDepartmentNameAndDepartmentCodeIgnoreCase("CS",
+                "CS-15"))
                 .thenReturn(department);
     }
 

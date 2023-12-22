@@ -14,6 +14,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
     @Override
     public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
@@ -28,7 +29,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department getDepartmentById(Long departmentId) throws DepartmentNotException {
         Optional<Department> department = departmentRepository.findById(departmentId);
 
-        if(department.isEmpty()) {
+        if (department.isEmpty()) {
             throw new DepartmentNotException("Department not found");
         }
 
@@ -38,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void deleteDepartmentById(Long departmentId) {
-         departmentRepository.deleteById(departmentId);
+        departmentRepository.deleteById(departmentId);
     }
 
     @Override
@@ -48,13 +49,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentByNameAndCode(String departmentName, String departmentCode) {
-        return departmentRepository.findByDepartmentNameAndDepartmentCodeIgnoreCase(departmentName, departmentCode);
+        return departmentRepository.findByDepartmentNameAndDepartmentCodeIgnoreCase(departmentName,
+                departmentCode);
     }
 
     @Override
     public Department getDepartmentByNameOrCode(String departmentName, String departmentCode) {
         return departmentRepository.findByDepartmentNameOrDepartmentCodeIgnoreCase(departmentName, departmentCode);
     }
-
 
 }

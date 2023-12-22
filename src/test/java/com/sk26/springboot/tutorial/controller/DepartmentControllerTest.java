@@ -26,70 +26,71 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @WebMvcTest(DepartmentController.class)
 public class DepartmentControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @MockBean
-    private DepartmentService departmentService;
+        @MockBean
+        private DepartmentService departmentService;
 
-    private Department department;
+        private Department department;
 
-    @BeforeEach
-    void setUp() {
-        department = Department.builder().departmentId(1L).departmentName("cs")
-                .departmentAddress("pune").departmentCode("cs-15").build();
+        @BeforeEach
+        void setUp() {
+                department = Department.builder().departmentId(1L).departmentName("cs")
+                                .departmentAddress("pune").departmentCode("cs-15").build();
 
-    }
+        }
 
-    @Test
-    void testGetDepartmentById() throws Exception {
-        Mockito.when(departmentService.getDepartmentById(52L))
-                .thenReturn(department);
+        @Test
+        void testGetDepartmentById() throws Exception {
+                Mockito.when(departmentService.getDepartmentById(52L))
+                                .thenReturn(department);
 
-        mockMvc.perform(get("/departments/{id}", 52)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.departmentName").value(department.getDepartmentName()));
+                mockMvc.perform(get("/departments/{id}", 52)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.departmentName").value(department.getDepartmentName()));
 
-    }
+        }
 
-    @Test
-    void testGetDepartmentByName() throws Exception {
+        @Test
+        void testGetDepartmentByName() throws Exception {
 
-        Mockito.when(departmentService.getDepartmentByName("cs")).thenReturn(department);
+                Mockito.when(departmentService.getDepartmentByName("cs")).thenReturn(department);
 
-        mockMvc.perform(get("/departments/name/{departmentName}", "cs")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.departmentAddress").value(department.getDepartmentAddress()));
+                mockMvc.perform(get("/departments/name/{departmentName}", "cs")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(print())
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.departmentAddress").value(department.getDepartmentAddress()));
 
-    }
+        }
 
-    @Test
-    void testGetDepartmentByNameAndCode() throws Exception {
-        Mockito.when(departmentService.getDepartmentByNameAndCode("cs", "cs-15")).thenReturn(department);
+        @Test
 
-        mockMvc.perform(get("/departments/nameAndCode/cs/cs-15").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.departmentName").value(department.getDepartmentName()));
+        void testGetDepartmentByNameAndCode() throws Exception {
+                Mockito.when(departmentService.getDepartmentByNameAndCode("cs", "cs-15")).thenReturn(department);
 
-    }
+                mockMvc.perform(get("/departments/nameAndCode/cs/cs-15").contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.departmentName").value(department.getDepartmentName()));
 
-    @Test
-    void testSaveDepartment() throws Exception {
-        Department inputDepartment = Department.builder().departmentId(1L).departmentName("CS")
-                .departmentAddress("pune").departmentCode("CS-15").build();
+        }
 
-        Mockito.when(departmentService.saveDepartment(inputDepartment)).thenReturn(department);
+        @Test
+        void testSaveDepartment() throws Exception {
+                Department inputDepartment = Department.builder().departmentId(1L).departmentName("CS")
+                                .departmentAddress("pune").departmentCode("CS-15").build();
 
-        mockMvc.perform(post("/departments").contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" + "\t\"departmentName\":\"cs\",\n" +
-                        "\t\"departmentAddress\":\"pune\",\n" +
-                        "\t\"departmentCode\":\"cs-15\"\n" +
-                        "}"))
-                .andExpect(status().isOk());
+                Mockito.when(departmentService.saveDepartment(inputDepartment)).thenReturn(department);
 
-    }
+                mockMvc.perform(post("/departments").contentType(MediaType.APPLICATION_JSON)
+                                .content("{\n" + "\t\"departmentName\":\"cs\",\n" +
+                                                "\t\"departmentAddress\":\"pune\",\n" +
+                                                "\t\"departmentCode\":\"cs-15\"\n" +
+                                                "}"))
+                                .andExpect(status().isOk());
+
+        }
 }

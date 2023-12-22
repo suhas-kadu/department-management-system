@@ -24,7 +24,7 @@ public class DepartmentController {
         return departmentService.saveDepartment(department);
     }
 
-    @GetMapping("departments")
+    @GetMapping(value = {"/", "/departments"})
     public List<Department> fetchDepartments() {
         LOGGER.info(departmentService.fetchDepartments().toString());
         return departmentService.fetchDepartments();
